@@ -1,16 +1,49 @@
-# React + Vite
+# 🫁 Respiro: The Winter Health Shield
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Missing Amps Winter Classic 2025 Submission**
+> *Turning sound waves ("Amps") into actionable health insights.*
 
-Currently, two official plugins are available:
+<img width="1240" height="914" alt="image" src="https://github.com/user-attachments/assets/9e466a67-ac12-4872-9616-5775fca229f2" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🥶 The Inspiration
+Winter 2025 brings beautiful weather, but it also brings the "Winter Smog" and respiratory illnesses. In urban areas (like Visakhapatnam), the Air Quality Index (AQI) often spikes during winter, but people ignore it until they get sick.
 
-## React Compiler
+We wanted to solve the **"Missing Amps"** challenge by interpreting "Amps" as **Audio Amplitude**. Respiro uses the *amplitude* of your breath to detect health issues that are often invisible (or "missing") to the naked eye.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 What it Does
+Respiro is a dual-engine health monitor that runs entirely in the browser:
 
-## Expanding the ESLint configuration
+1.  **Hyper-Local Air Analysis:**
+    *   It doesn't just guess your city; it uses **GPS** and **OpenStreetMap (Nominatim)** to find your exact suburb (e.g., "Madhurawada, Visakhapatnam").
+    *   It pulls real-time **PM2.5 data** via the OpenWeatherMap API.
+    *   It translates technical numbers into human-friendly terms (e.g., "Hazy" instead of "Poor") using **CPCB Standards**.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2.  **Bio-Acoustic Lung Monitor:**
+    *   Using the native **Web Audio API**, the app listens to your breathing patterns.
+    *   It uses a **Spike Detection Algorithm** to differentiate between heavy breathing (slow rise) and coughing (sudden amplitude spike).
+    *   It correlates your biological data (Coughing) with environmental data (Smog) to generate a custom health report.
+
+3.  **Atmospheric UI:**
+    *   The app interface changes color dynamically based on the air quality (Green for Fresh, Orange for Hazy, Red for Hazardous), giving immediate visual feedback.
+
+## ⚙️ How We Built It
+We focused on a lightweight, privacy-first approach. No audio is ever sent to a server; everything is processed locally on the client.
+
+*   **Frontend:** React.js + Vite
+*   **Styling:** CSS3 with Glassmorphism & Dynamic Gradients
+*   **Sensors:** Navigator Geolocation API + Web Audio API (AnalyserNode)
+*   **Data Sources:**
+    *   *Pollution:* OpenWeatherMap Air Pollution API
+    *   *Reverse Geocoding:* OpenStreetMap (Nominatim)
+
+## 🧠 The "Smart" Audio Logic
+We initially tried using heavy AI models (TensorFlow/YAMNet) but found them too slow for a seamless web experience. We switched to a custom **Amplitude Spike Algorithm**:
+
+// Simplified Logic:
+const volumeSpike = currentVolume - lastVolume;
+
+// We look for a SUDDEN spike (>20) combined with high volume (>50).
+// This filters out wind noise and talking, isolating the "percussive" sound of a cough.
+if (currentVolume > 50 && volumeSpike > 20) {
+  triggerCoughAlert();
+}
